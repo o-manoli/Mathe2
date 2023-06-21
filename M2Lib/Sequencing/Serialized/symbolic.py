@@ -48,7 +48,15 @@ class SymbolicSerializedSequence:
 
 	@__getitem__.register(slice)  # A Series
 	def _(self, index):
-		if index.stop is None:    # Series limit to inf #TODO
+		if index.stop is None:
+			if index.start is not None or index.step is not None:
+				start = 0 if index.start is None else index.start
+				step = 1 if index.step is None else index.step      # surely one of them is not None
+				def yielder(i:int = start-step, step:int = step, Sub:Callable = self.Sub):
+					while True:
+						yield Sub(i := i + step)
+				return yielder()
+			# Series limit to inf #TODO
 			# regardless what the other values are! start, stop, step
 			raise NotImplementedError("Still don't know how to do it")
 		if index.stop is oo:      # Sequence limit to inf
