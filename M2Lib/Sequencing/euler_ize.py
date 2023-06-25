@@ -67,9 +67,9 @@ def fetch_header(n:int, var:tuple = ('t', 'y'), gen_dy_dt: Callable = lambda y: 
 
 
 def euler_ize(
-		t0=.0, *y, h=.1,
+		*y, t0=.0, h=.1,
 		verbose: bool = True, loop: int = 10, rounded2: int = 6
-):
+	):
 	"""
 		Transform a differential function written in the form:
 
@@ -128,7 +128,5 @@ def euler_ize(
 def main():
 	print(__doc__)
 
-
 if __name__ == '__main__':
 	main()
-
