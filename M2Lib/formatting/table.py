@@ -137,14 +137,14 @@ def loop(A:Iterator, n: int = 10) -> Generator:
 	while (n := n - 1) > 0:      # countdown
 		yield next(A)
 
-def show(A:Callable, header_formatter:Callable, n: int = 10, pre_process:Callable = lambda x: x ) -> None:
+def show(A:Callable, header_formatter:Callable, n: int = 10, pre_process:Callable = lambda x: x, verbose:bool = True) -> None:
 
 	pre_processed = lambda Row: tuple(map(lambda x: f"{pre_process(x)}", Row))   # row-wise
 
 	S = map(pre_processed, loop(A(), n))
 
-	markdown_table(S, header_formatter, verbose=True)
+	return markdown_table(S, header_formatter, verbose=verbose)
 
-def show_rounded(A:Callable, header_formatter:Callable, n: int = 10, rounded2:int = 6) -> None:
+def show_rounded(A:Callable, header_formatter:Callable, n: int = 10, rounded2:int = 6, verbose:bool = True) -> None:
 
-	show(A, header_formatter, n, pre_process=lambda x: round(x, rounded2))
+	return show(A, header_formatter, n, pre_process=lambda x: round(x, rounded2), verbose=verbose)
